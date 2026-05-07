@@ -1,3 +1,4 @@
+import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
 import 'package:eqraa_book_store/feature/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
-      routes: {"/onboarding": (context) => OnboardingScreen()},
+      routes: {
+        "/onboarding": (context) => OnboardingScreen(),
+        "/login": (context) => LoginScreen(),
+      },
     );
   }
 }

@@ -57,7 +57,9 @@ class OnboardingScreen extends StatelessWidget {
                     MainButton(
                       title: "Next",
                       isEnabled: true,
-                      onPressedFunction: () {},
+                      onPressedFunction: () {
+                        Navigator.pushReplacementNamed(context, "/login");
+                      },
                     ),
                   ],
                 ),
