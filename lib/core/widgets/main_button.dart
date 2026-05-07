@@ -19,7 +19,7 @@ class MainButton extends StatelessWidget {
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: Colors.grey.withAlpha(50),
+        disabledBackgroundColor: Colors.grey[400],
         backgroundColor: Constants.mainColor,
         fixedSize: Size(size.width * .9, size.height * .07),
       ),

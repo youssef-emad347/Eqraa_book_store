@@ -32,6 +32,20 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  bool get _isEmailValid => RegExp(
+        r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
+      ).hasMatch(emailController.text);
+
+  bool get _isPasswordValid {
+    final value = passwordController.text;
+    if (value.length < 8) return false;
+    if (!RegExp(r'[A-Z]').hasMatch(value)) return false;
+    if (!RegExp(r'[a-z]').hasMatch(value)) return false;
+    if (!RegExp(r'[0-9]').hasMatch(value)) return false;
+    if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) return false;
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -72,6 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           hint: "Email",
                           prefixIcon: Icons.email_outlined,
                           controller: emailController,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
@@ -91,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscure: !_isPasswordVisible,
                           showPasswordStrength: true,
                           controller: passwordController,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
                           suffix: IconButton(
                             icon: Icon(
                               _isPasswordVisible
@@ -146,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: screenHeight * 0.02),
                         MainButton(
                           title: "Login",
-                          isEnabled: true,
+                          isEnabled: _isEmailValid && _isPasswordValid,
                           onPressedFunction: () {
                             if (_formKey.currentState!.validate()) {
                               print("Login successful!");
