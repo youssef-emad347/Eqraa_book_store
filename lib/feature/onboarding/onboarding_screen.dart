@@ -49,7 +49,7 @@ class OnboardingScreen extends StatelessWidget {
                       "It is a long established fact that a reader will be distracted by the readable content.",
                       style: TextStyle(
                         fontSize: 15,
-                        fontWeight: FontWeight.w100,
+                        fontWeight: FontWeight.w500,
                         color: Colors.grey,
                       ),
                     ),
