@@ -15,8 +15,14 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool _isPasswordVisible = false;
+
+  final RegExp _emailRegex = RegExp(
+    r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
+  );
 
   @override
   void initState() {
@@ -31,6 +37,51 @@ class _LoginScreenState extends State<LoginScreen> {
     passwordController.dispose();
     super.dispose();
   }
+
+  String? validateEmail(String value) {
+    if (value.isEmpty) {
+      return 'Please enter your email';
+    }
+
+    if (!_emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email address';
+    }
+
+    return null;
+  }
+
+  String? validatePassword(String value) {
+    if (value.isEmpty) {
+      return 'Please enter your password';
+    }
+
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Add at least one uppercase letter';
+    }
+
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return 'Add at least one lowercase letter';
+    }
+
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return 'Add at least one number';
+    }
+
+    if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return 'Add at least one special character';
+    }
+
+    return null;
+  }
+
+  bool get _isEmailValid => validateEmail(emailController.text) == null;
+
+  bool get _isPasswordValid =>
+      validatePassword(passwordController.text) == null;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +102,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HeaderCustomWidget(text: "Let's get you Login!"),
+
                         SizedBox(height: screenHeight * 0.03),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -65,32 +118,34 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
+
                         SizedBox(height: screenHeight * 0.03),
+
                         OrDivider(),
+
                         SizedBox(height: screenHeight * 0.025),
+
                         CustomTextFormField(
                           hint: "Email",
                           prefixIcon: Icons.email_outlined,
                           controller: emailController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            if (!RegExp(
-                              r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
-                            ).hasMatch(value)) {
-                              return 'Please enter a valid email address';
-                            }
-                            return null;
+                          onChanged: (value) {
+                            setState(() {});
                           },
+                          validator: (value) => validateEmail(value ?? ''),
                         ),
+
                         SizedBox(height: screenHeight * 0.0025),
+
                         CustomTextFormField(
                           hint: "Password",
                           prefixIcon: Icons.lock_outlined,
                           obscure: !_isPasswordVisible,
                           showPasswordStrength: true,
                           controller: passwordController,
+                          onChanged: (value) {
+                            setState(() {});
+                          },
                           suffix: IconButton(
                             icon: Icon(
                               _isPasswordVisible
@@ -104,31 +159,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             },
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
-                            }
-                            if (value.length < 8) {
-                              return 'Password must be at least 8 characters';
-                            }
-                            if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                              return 'Add at least one uppercase letter';
-                            }
-                            if (!RegExp(r'[a-z]').hasMatch(value)) {
-                              return 'Add at least one lowercase letter';
-                            }
-                            if (!RegExp(r'[0-9]').hasMatch(value)) {
-                              return 'Add at least one number';
-                            }
-                            if (!RegExp(
-                              r'[!@#\$%^&*(),.?":{}|<>]',
-                            ).hasMatch(value)) {
-                              return 'Add at least one special character';
-                            }
-                            return null;
-                          },
+                          validator: (value) => validatePassword(value ?? ''),
                         ),
+
                         SizedBox(height: screenHeight * 0.01),
+
                         Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
@@ -143,15 +178,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
+
                         SizedBox(height: screenHeight * 0.02),
+
                         MainButton(
                           title: "Login",
-                          isEnabled: true,
+                          isEnabled: _isEmailValid && _isPasswordValid,
                           onPressedFunction: () {
                             if (_formKey.currentState!.validate()) {
-                              print("Login successful!");
-                              print("Email: ${emailController.text}");
-                              print("Password: ${passwordController.text}");
+                              debugPrint("Login successful!");
+                              debugPrint("Email: ${emailController.text}");
+                              debugPrint(
+                                "Password: ${passwordController.text}",
+                              );
                             }
                           },
                         ),
@@ -159,11 +198,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+
                 SizedBox(height: screenHeight * 0.02),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Don't have an account? "),
+
                     GestureDetector(
                       onTap: () {},
                       child: const Text(
@@ -176,6 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
+
                 SizedBox(height: screenHeight * 0.01),
               ],
             ),
