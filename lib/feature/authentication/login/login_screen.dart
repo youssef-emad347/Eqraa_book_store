@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
 
   @override
   void initState() {
@@ -44,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _formKey,
             child: Column(
               children: [
-                // المحتوى اللي بيتسكرول
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
@@ -88,9 +88,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomTextFormField(
                           hint: "Password",
                           prefixIcon: Icons.lock_outlined,
-                          obscure: true,
+                          obscure: !_isPasswordVisible,
                           showPasswordStrength: true,
                           controller: passwordController,
+                          suffix: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
@@ -119,9 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
-                            onTap: () {
-                              // روح لصفحة Forget Password
-                            },
+                            onTap: () {},
                             child: const Text(
                               "Forgot Password?",
                               style: TextStyle(
@@ -138,7 +149,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           isEnabled: true,
                           onPressedFunction: () {
                             if (_formKey.currentState!.validate()) {
-                              // اعمل Login هنا
                               print("Login successful!");
                               print("Email: ${emailController.text}");
                               print("Password: ${passwordController.text}");
@@ -149,17 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-
-                // الزرار والـ Create Account ثابتين في الأسفل
                 SizedBox(height: screenHeight * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Don't have an account? "),
                     GestureDetector(
-                      onTap: () {
-                        // روح لصفحة Register
-                      },
+                      onTap: () {},
                       child: const Text(
                         "Create Account",
                         style: TextStyle(
