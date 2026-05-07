@@ -26,9 +26,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    super.initState();
   }
 
   @override
@@ -39,47 +39,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String? validateEmail(String value) {
-    if (value.isEmpty) {
-      return 'Please enter your email';
-    }
-
-    if (!_emailRegex.hasMatch(value)) {
-      return 'Please enter a valid email address';
-    }
-
+    if (value.isEmpty) return 'Please enter your email';
+    if (!_emailRegex.hasMatch(value)) return 'Please enter a valid email';
     return null;
   }
 
   String? validatePassword(String value) {
-    if (value.isEmpty) {
-      return 'Please enter your password';
-    }
-
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters';
-    }
-
-    if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Add at least one uppercase letter';
-    }
-
-    if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'Add at least one lowercase letter';
-    }
-
-    if (!RegExp(r'[0-9]').hasMatch(value)) {
-      return 'Add at least one number';
-    }
-
+    if (value.isEmpty) return 'Please enter your password';
+    if (value.length < 8) return 'Password must be at least 8 characters';
+    if (!RegExp(r'[A-Z]').hasMatch(value)) return 'Add uppercase letter';
+    if (!RegExp(r'[a-z]').hasMatch(value)) return 'Add lowercase letter';
+    if (!RegExp(r'[0-9]').hasMatch(value)) return 'Add number';
     if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'Add at least one special character';
+      return 'Add special character';
     }
-
     return null;
   }
 
   bool get _isEmailValid => validateEmail(emailController.text) == null;
-
   bool get _isPasswordValid =>
       validatePassword(passwordController.text) == null;
 
@@ -107,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                          children: const [
                             OptionLogin(
                               text: "Google",
                               image: "assets/google.png",
@@ -129,23 +106,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           hint: "Email",
                           prefixIcon: Icons.email_outlined,
                           controller: emailController,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
+                          onChanged: (_) => setState(() {}),
                           validator: (value) => validateEmail(value ?? ''),
                         ),
 
-                        SizedBox(height: screenHeight * 0.0025),
+                        SizedBox(height: screenHeight * 0.01),
 
                         CustomTextFormField(
                           hint: "Password",
                           prefixIcon: Icons.lock_outlined,
                           obscure: !_isPasswordVisible,
-                          showPasswordStrength: true,
                           controller: passwordController,
-                          onChanged: (value) {
-                            setState(() {});
-                          },
+                          onChanged: (_) => setState(() {}),
                           suffix: IconButton(
                             icon: Icon(
                               _isPasswordVisible
@@ -181,45 +153,44 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         SizedBox(height: screenHeight * 0.02),
 
-                        MainButton(
-                          title: "Login",
-                          isEnabled: _isEmailValid && _isPasswordValid,
-                          onPressedFunction: () {
-                            if (_formKey.currentState!.validate()) {
-                              debugPrint("Login successful!");
-                              debugPrint("Email: ${emailController.text}");
-                              debugPrint(
-                                "Password: ${passwordController.text}",
-                              );
-                            }
-                          },
+                        Center(
+                          child: MainButton(
+                            title: "Login",
+                            isEnabled: _isEmailValid && _isPasswordValid,
+                            onPressedFunction: () {
+                              if (_formKey.currentState!.validate()) {
+                                debugPrint("Login successful");
+                                debugPrint(emailController.text);
+                              }
+                            },
+                          ),
                         ),
+                        SizedBox(height: screenHeight * 0.2),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Don't have an account? "),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, "/signup");
+                              },
+                              child: const Text(
+                                "Create Account",
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: screenHeight * 0.01),
                       ],
                     ),
                   ),
                 ),
-
-                SizedBox(height: screenHeight * 0.02),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Don't have an account? "),
-
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Text(
-                        "Create Account",
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: screenHeight * 0.01),
               ],
             ),
           ),

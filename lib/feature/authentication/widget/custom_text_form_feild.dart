@@ -52,6 +52,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               widget.onChanged?.call(value);
             },
             decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 15,
+                vertical: 20,
+              ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(color: Colors.grey, width: 1.5),
