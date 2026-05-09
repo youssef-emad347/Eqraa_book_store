@@ -1,13 +1,16 @@
 import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
 import 'package:eqraa_book_store/feature/authentication/forget_password/forget_password.dart';
+import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
+import 'package:eqraa_book_store/feature/home/home_screen.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
 import 'package:eqraa_book_store/feature/splash/splash_screen.dart';
 import 'package:eqraa_book_store/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,21 +21,42 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+   
+      
+   return BlocProvider(
       create: (context) => AuthCubit(),
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
-        routes: {
-          "/onboarding": (context) => OnboardingScreen(),
-          "/login": (context) => LoginScreen(),
-          "/signup": (context) => SignUpScreen(),
-          "/forgetpassword": (context) => ForgetPassword(),
-        },
+      theme: ThemeData(
+        textTheme: GoogleFonts.lexendTextTheme(),
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade300, width: 1.5),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Constants.mainColor,
+              width: 1.5,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
       ),
+       
+      debugShowCheckedModeBanner: false,
+      home: const HomeScreen(),
+      routes: {
+        "/onboarding": (context) => const OnboardingScreen(),
+        "/login": (context) => const LoginScreen(),
+        "/signup": (context) => const SignUpScreen(),
+        "/forgetpassword": (context) => const ForgetPassword(),
+      },
     );
   }
 }
