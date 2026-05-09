@@ -21,14 +21,15 @@ class BookCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        child: Column(
-          spacing: 6,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
+      child: Column(
+        spacing: 6,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              AspectRatio(
+                aspectRatio: 0.9,
+                child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(imageUrl),
@@ -36,48 +37,46 @@ class BookCard extends StatelessWidget {
                     ),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  width: double.infinity,
-                  height: 240,
                 ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: const Icon(
-                      Icons.favorite_border_outlined,
-                      color: Colors.black,
-                      size: 20,
-                    ),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: const Icon(
+                    Icons.favorite_border_outlined,
+                    color: Colors.black,
+                    size: 20,
                   ),
                 ),
-              ],
-            ),
-            Text(
-              author,
-              style: StylesManager.textStyle15px,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            Text(
-              "\$${price.toStringAsFixed(2)}",
-              style: const TextStyle(fontSize: 18),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          Text(
+            author,
+            style: StylesManager.textStyle15px,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            "\$${price.toStringAsFixed(2)}",
+            style: const TextStyle(fontSize: 18),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }
