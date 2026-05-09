@@ -6,16 +6,19 @@ class NewArrivalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      width: 280,
-      padding: const EdgeInsets.all(10),
+      width: screenWidth * 0.7,
+      padding: EdgeInsets.all(screenWidth * 0.025),
       decoration: BoxDecoration(
         color: Colors.white70,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
             blurRadius: 30,
-            offset: Offset(0, 10),
+            offset: const Offset(0, 10),
           ),
         ],
         borderRadius: BorderRadius.circular(10),
@@ -25,26 +28,39 @@ class NewArrivalCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: NetworkImage(
                   "https://covers.openlibrary.org/b/id/14627227-L.jpg",
                 ),
                 fit: BoxFit.fill,
               ),
             ),
-            height: 100,
-            width: 100,
+            height: screenHeight * 0.12,
+            width: screenHeight * 0.12,
           ),
-          SizedBox(width: 15),
+          SizedBox(width: screenWidth * 0.04),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "The Great Gatsby",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Text("F. Scott Fitzgerald", style: StylesManager.textStyle15px),
+                Text(
+                  "F. Scott Fitzgerald",
+                  style: StylesManager.textStyle15px.copyWith(
+                    fontSize: screenWidth * 0.035,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ),

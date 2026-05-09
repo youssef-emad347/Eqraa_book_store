@@ -33,6 +33,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -40,20 +43,20 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Image.asset("assets/arrowIcon.png", height: 20),
+          icon: Image.asset("assets/arrowIcon.png", height: screenHeight * 0.025),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border_outlined, size: 24),
+            icon: Icon(Icons.favorite_border_outlined, size: screenWidth * 0.06),
             onPressed: () {},
           ),
           IconButton(
-            icon: Image.asset("assets/shareIcon.png", height: 24),
+            icon: Image.asset("assets/shareIcon.png", height: screenHeight * 0.03),
             onPressed: () {},
           ),
           IconButton(
-            icon: Image.asset("assets/cartIcon.png", height: 24),
+            icon: Image.asset("assets/cartIcon.png", height: screenHeight * 0.03),
             onPressed: () {},
           ),
         ],
@@ -62,15 +65,20 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: [
                   Container(
-                    height: 460,
+                    height: screenHeight * 0.55,
                     width: double.infinity,
-                    margin: const EdgeInsets.only(top: 100),
-                    padding: const EdgeInsets.fromLTRB(20, 160, 20, 25),
+                    margin: EdgeInsets.only(top: screenHeight * 0.12),
+                    padding: EdgeInsets.fromLTRB(
+                      screenWidth * 0.05,
+                      screenHeight * 0.2,
+                      screenWidth * 0.05,
+                      screenHeight * 0.03,
+                    ),
                     decoration: BoxDecoration(
                       color: const Color(0xFFF0F4FF),
                       borderRadius: BorderRadius.circular(30),
@@ -80,18 +88,20 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                       children: [
                         Text(
                           widget.title,
-                          style: const TextStyle(
-                            fontSize: 24,
+                          style: TextStyle(
+                            fontSize: screenWidth * 0.06,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: screenHeight * 0.01),
                         Text(
                           "By ${widget.author}",
-                          style: StylesManager.textStyle15px,
+                          style: StylesManager.textStyle15px.copyWith(
+                            fontSize: screenWidth * 0.035,
+                          ),
                         ),
-                        const SizedBox(height: 25),
+                        SizedBox(height: screenHeight * 0.03),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -113,8 +123,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     ),
                   ),
                   Container(
-                    height: 370,
-                    width: 260,
+                    height: screenHeight * 0.45,
+                    width: screenWidth * 0.65,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
@@ -134,15 +144,18 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: EdgeInsets.all(screenWidth * 0.06),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "Descriptions",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.05,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 12),
+                  SizedBox(height: screenHeight * 0.015),
                   InkWell(
                     onTap: () {
                       setState(() {
@@ -157,7 +170,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           height: 1.6,
-                          fontSize: 14,
+                          fontSize: screenWidth * 0.035,
                         ),
                         children: [
                           TextSpan(
@@ -171,34 +184,40 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 25),
-                  const Text(
+                  SizedBox(height: screenHeight * 0.03),
+                  Text(
                     "Author",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.05,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: screenHeight * 0.02),
                   Row(
                     children: [
-                      const CircleAvatar(
-                        radius: 28,
-                        backgroundImage: NetworkImage(
+                      CircleAvatar(
+                        radius: screenWidth * 0.07,
+                        backgroundImage: const NetworkImage(
                           "https://i.pravatar.cc/150?u=author",
                         ),
                       ),
-                      const SizedBox(width: 15),
+                      SizedBox(width: screenWidth * 0.04),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
                             widget.author,
-                            style: const TextStyle(
-                              fontSize: 16,
+                            style: TextStyle(
+                              fontSize: screenWidth * 0.04,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const Text(
+                          Text(
                             "Author",
-                            style: TextStyle(color: Colors.grey, fontSize: 13),
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: screenWidth * 0.03,
+                            ),
                           ),
                         ],
                       ),
@@ -209,12 +228,17 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                           backgroundColor: const Color(0xFFF0F4FF),
                           foregroundColor: Constants.mainColor,
                           elevation: 0,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.05,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25),
                           ),
                         ),
-                        child: const Text("View Profile"),
+                        child: Text(
+                          "View Profile",
+                          style: TextStyle(fontSize: screenWidth * 0.03),
+                        ),
                       ),
                     ],
                   ),
@@ -225,7 +249,12 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.fromLTRB(25, 15, 25, 30),
+        padding: EdgeInsets.fromLTRB(
+          screenWidth * 0.06,
+          screenHeight * 0.02,
+          screenWidth * 0.06,
+          screenHeight * 0.04,
+        ),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
@@ -242,32 +271,38 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   "Price",
-                  style: TextStyle(color: Colors.grey, fontSize: 14),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: screenWidth * 0.035,
+                  ),
                 ),
                 Text(
                   "\$${widget.price.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    fontSize: 22,
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.055,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            const SizedBox(width: 35),
+            SizedBox(width: screenWidth * 0.08),
             Expanded(
               child: ElevatedButton(
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Constants.mainColor,
                   foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 55),
+                  minimumSize: Size(double.infinity, screenHeight * 0.07),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(35),
                   ),
                 ),
-                child: const Text("Buy Now", style: TextStyle(fontSize: 18)),
+                child: Text(
+                  "Buy Now",
+                  style: TextStyle(fontSize: screenWidth * 0.045),
+                ),
               ),
             ),
           ],

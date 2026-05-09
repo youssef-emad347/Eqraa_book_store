@@ -15,8 +15,10 @@ class _CategoryChipsState extends State<CategoryChips> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return SizedBox(
-      height: 40,
+      height: screenHeight * 0.05,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _categories.length,

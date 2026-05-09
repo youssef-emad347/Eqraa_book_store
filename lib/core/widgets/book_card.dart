@@ -19,10 +19,11 @@ class BookCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return GestureDetector(
       onTap: onTap,
       child: Column(
-        spacing: 6,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
@@ -43,36 +44,42 @@ class BookCard extends StatelessWidget {
                 top: 10,
                 right: 10,
                 child: Container(
-                  height: 30,
-                  width: 30,
+                  height: screenWidth * 0.08,
+                  width: screenWidth * 0.08,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(100),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.favorite_border_outlined,
                     color: Colors.black,
-                    size: 20,
+                    size: screenWidth * 0.05,
                   ),
                 ),
               ),
             ],
           ),
+          SizedBox(height: screenWidth * 0.015),
           Text(
             author,
-            style: StylesManager.textStyle15px,
+            style: StylesManager.textStyle15px.copyWith(
+              fontSize: screenWidth * 0.035,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
             title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: screenWidth * 0.045,
+              fontWeight: FontWeight.bold,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
             "\$${price.toStringAsFixed(2)}",
-            style: const TextStyle(fontSize: 18),
+            style: TextStyle(fontSize: screenWidth * 0.04),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

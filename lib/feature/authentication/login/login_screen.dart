@@ -54,12 +54,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: EdgeInsets.all(screenWidth * 0.04),
           child: Form(
             key: _formKey,
             child: Column(
@@ -133,12 +134,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: () {
                               Navigator.pushNamed(context, '/forgetpassword');
                             },
-                            child: const Text(
+                            child: Text(
                               "Forgot Password?",
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                                fontSize: screenWidth * 0.035,
                               ),
                             ),
                           ),

@@ -75,6 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -82,36 +85,51 @@ class _HomeScreenState extends State<HomeScreen> {
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                padding: EdgeInsets.fromLTRB(
+                  screenWidth * 0.05,
+                  screenHeight * 0.02,
+                  screenWidth * 0.05,
+                  0,
+                ),
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                      padding: EdgeInsets.only(bottom: screenHeight * 0.02),
                       child: Row(
                         children: [
                           SizedBox(
-                            height: 30,
-                            width: 30,
+                            height: screenHeight * 0.035,
+                            width: screenHeight * 0.035,
                             child: Image.asset(
                               "assets/menuIcon.png",
                               fit: BoxFit.fill,
                             ),
                           ),
-                          SizedBox(width: 15),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Hello, Willie 👋🏻",
-                                style: StylesManager.textStyle15px,
-                              ),
-                              Text(
-                                "Keep exploring",
-                                style: StylesManager.textStyle24px,
-                              ),
-                            ],
+                          SizedBox(width: screenWidth * 0.04),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Hello, Willie 👋🏻",
+                                  style: StylesManager.textStyle15px.copyWith(
+                                    fontSize: screenWidth * 0.035,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  "Keep exploring",
+                                  style: StylesManager.textStyle24px.copyWith(
+                                    fontSize: screenWidth * 0.06,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
@@ -120,12 +138,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               borderRadius: BorderRadius.circular(100),
                             ),
-                            height: 50,
-                            width: 50,
+                            height: screenHeight * 0.06,
+                            width: screenHeight * 0.06,
                             child: Image.asset(
                               "assets/cartIcon.png",
-                              cacheHeight: 30,
-                              cacheWidth: 30,
+                              scale: 2,
                             ),
                           ),
                         ],
@@ -143,34 +160,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                     SeparateText(text: "New Arrivals"),
-                    const SizedBox(height: 10),
+                    SizedBox(height: screenHeight * 0.015),
                     SizedBox(
-                      height: 120,
+                      height: screenHeight * 0.18,
                       child: ListView.builder(
                         clipBehavior: Clip.none,
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) => const Padding(
-                          padding: EdgeInsets.only(right: 12),
-                          child: NewArrivalCard(),
+                        itemBuilder: (context, index) => Padding(
+                          padding: EdgeInsets.only(right: screenWidth * 0.03),
+                          child: const NewArrivalCard(),
                         ),
                         itemCount: 5,
                       ),
                     ),
                     SeparateText(text: "All Categories"),
-                    CategoryChips(),
-                    SizedBox(height: 10),
+                    const CategoryChips(),
+                    SizedBox(height: screenHeight * 0.015),
                   ],
                 ),
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+              padding: EdgeInsets.fromLTRB(
+                screenWidth * 0.05,
+                screenHeight * 0.01,
+                screenWidth * 0.05,
+                screenHeight * 0.02,
+              ),
               sliver: SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 15,
-                  childAspectRatio: 0.65,
+                  childAspectRatio: 0.62,
                 ),
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final book = books[index];

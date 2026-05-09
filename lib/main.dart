@@ -5,7 +5,7 @@ import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart'
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
 import 'package:eqraa_book_store/feature/main_layout.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
-import 'package:eqraa_book_store/feature/splash/splash_screen.dart';
+import 'package:eqraa_book_store/feature/home/home_screen.dart';
 import 'package:eqraa_book_store/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
