@@ -4,6 +4,8 @@ import 'package:eqraa_book_store/core/widgets/search_text_field.dart';
 import 'package:eqraa_book_store/core/widgets/separate_text.dart';
 import 'package:eqraa_book_store/feature/home/widgets/new_arrival_card.dart';
 import 'package:eqraa_book_store/feature/home/widgets/categories_choice.dart';
+import 'package:eqraa_book_store/feature/authentication/details/book_details_screen.dart';
+import 'package:eqraa_book_store/feature/search/search_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,36 +22,54 @@ class _HomeScreenState extends State<HomeScreen> {
       'author': 'F. Scott Fitzgerald',
       'imageUrl': 'https://covers.openlibrary.org/b/id/14627227-L.jpg',
       'price': 55.0,
+      'rating': 4.5,
+      'language': 'English',
+      'pages': 180,
     },
     {
       'title': 'To Kill a Mockingbird',
       'author': 'Harper Lee',
       'imageUrl': 'https://covers.openlibrary.org/b/id/8225261-L.jpg',
       'price': 45.0,
+      'rating': 4.8,
+      'language': 'English',
+      'pages': 281,
     },
     {
       'title': '1984',
       'author': 'George Orwell',
       'imageUrl': 'https://covers.openlibrary.org/b/id/7222246-L.jpg',
       'price': 40.0,
+      'rating': 4.7,
+      'language': 'English',
+      'pages': 328,
     },
     {
       'title': 'Pride and Prejudice',
       'author': 'Jane Austen',
       'imageUrl': 'https://covers.openlibrary.org/b/id/8118144-L.jpg',
       'price': 35.0,
+      'rating': 4.6,
+      'language': 'English',
+      'pages': 279,
     },
     {
       'title': 'The Catcher in the Rye',
       'author': 'J.D. Salinger',
       'imageUrl': 'https://covers.openlibrary.org/b/id/8231991-L.jpg',
       'price': 50.0,
+      'rating': 4.2,
+      'language': 'English',
+      'pages': 214,
     },
     {
       'title': 'Harry Potter and the Sorcerer\'s Stone',
       'author': 'J.K. Rowling',
       'imageUrl': 'https://covers.openlibrary.org/b/id/7989100-L.jpg',
       'price': 60.0,
+      'rating': 4.9,
+      'language': 'English',
+      'pages': 309,
     },
   ];
 
@@ -111,7 +131,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    SearchTextField(),
+                    SearchTextField(
+                      readOnly: true,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SearchScreen(),
+                          ),
+                        );
+                      },
+                    ),
                     SeparateText(text: "New Arrivals"),
                     const SizedBox(height: 10),
                     SizedBox(
@@ -149,6 +179,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     author: book['author'] as String,
                     imageUrl: book['imageUrl'] as String,
                     price: book['price'] as double,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BookDetailsScreen(
+                            title: book['title'] as String,
+                            author: book['author'] as String,
+                            imageUrl: book['imageUrl'] as String,
+                            price: book['price'] as double,
+                            rating: book['rating'] as double,
+                            language: book['language'] as String,
+                            pages: book['pages'] as int,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 }, childCount: books.length),
               ),
