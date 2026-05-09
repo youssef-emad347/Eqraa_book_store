@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "65456947786",
+    "project_id": "eqraa-book-store",
+    "storage_bucket": "eqraa-book-store.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65456947786:android:ecb0f1be93067acc011cb3",
+        "android_client_info": {
+          "package_name": "com.example.eqraa_book_store"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-_DHjwFgwkIzbHvfGAu4dix4sBzn1N1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
