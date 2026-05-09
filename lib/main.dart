@@ -23,40 +23,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-      
-   return BlocProvider(
+    return BlocProvider(
       create: (context) => AuthCubit(),
       child: MaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.lexendTextTheme(),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey, width: 1.5),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade300, width: 1.5),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              color: Constants.mainColor,
-              width: 1.5,
+        theme: ThemeData(
+          textTheme: GoogleFonts.lexendTextTheme(),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 1.5),
+              borderRadius: BorderRadius.circular(10),
             ),
-            borderRadius: BorderRadius.circular(10),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey.shade300, width: 1.5),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: const BorderSide(
+                color: Constants.mainColor,
+                width: 1.5,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
           ),
         ),
+
+        debugShowCheckedModeBanner: false,
+        home: const MainLayout(),
+        routes: {
+          "/onboarding": (context) => const OnboardingScreen(),
+          "/login": (context) => const LoginScreen(),
+          "/signup": (context) => const SignUpScreen(),
+          "/forgetpassword": (context) => const ForgetPassword(),
+        },
       ),
-       
-      debugShowCheckedModeBanner: false,
-      home: const MainLayout(),
-      routes: {
-        "/onboarding": (context) => const OnboardingScreen(),
-        "/login": (context) => const LoginScreen(),
-        "/signup": (context) => const SignUpScreen(),
-        "/forgetpassword": (context) => const ForgetPassword(),
-      },
     );
   }
 }
