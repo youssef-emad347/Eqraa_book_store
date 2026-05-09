@@ -1,7 +1,7 @@
 import 'package:eqraa_book_store/core/widgets/book_card.dart';
 import 'package:eqraa_book_store/core/widgets/search_text_field.dart';
 import 'package:eqraa_book_store/core/widgets/separate_text.dart';
-import 'package:eqraa_book_store/feature/authentication/details/book_details_screen.dart';
+import 'package:eqraa_book_store/feature/details/book_details_screen.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -47,9 +47,7 @@ class SearchScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SearchTextField(
-                      autofocus: true,
-                    ),
+                    const SearchTextField(autofocus: true),
                     const SizedBox(height: 20),
                     const Text(
                       "Recent Search",
@@ -96,36 +94,33 @@ class SearchScreen extends StatelessWidget {
                     crossAxisCount: 2,
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 15,
-                    childAspectRatio: 0.65,
+                    childAspectRatio: 0.55,
                   ),
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final book = popularBooks[index];
-                      return BookCard(
-                        title: book['title'] as String,
-                        author: book['author'] as String,
-                        imageUrl: book['imageUrl'] as String,
-                        price: book['price'] as double,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BookDetailsScreen(
-                                title: book['title'] as String,
-                                author: book['author'] as String,
-                                imageUrl: book['imageUrl'] as String,
-                                price: book['price'] as double,
-                                rating: book['rating'] as double,
-                                language: book['language'] as String,
-                                pages: book['pages'] as int,
-                              ),
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                    final book = popularBooks[index];
+                    return BookCard(
+                      title: book['title'] as String,
+                      author: book['author'] as String,
+                      imageUrl: book['imageUrl'] as String,
+                      price: book['price'] as double,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BookDetailsScreen(
+                              title: book['title'] as String,
+                              author: book['author'] as String,
+                              imageUrl: book['imageUrl'] as String,
+                              price: book['price'] as double,
+                              rating: book['rating'] as double,
+                              language: book['language'] as String,
+                              pages: book['pages'] as int,
                             ),
-                          );
-                        },
-                      );
-                    },
-                    childCount: popularBooks.length,
-                  ),
+                          ),
+                        );
+                      },
+                    );
+                  }, childCount: popularBooks.length),
                 ),
               ),
             ],

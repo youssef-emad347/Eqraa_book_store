@@ -4,7 +4,7 @@ import 'package:eqraa_book_store/core/widgets/search_text_field.dart';
 import 'package:eqraa_book_store/core/widgets/separate_text.dart';
 import 'package:eqraa_book_store/feature/home/widgets/new_arrival_card.dart';
 import 'package:eqraa_book_store/feature/home/widgets/categories_choice.dart';
-import 'package:eqraa_book_store/feature/authentication/details/book_details_screen.dart';
+import 'package:eqraa_book_store/feature/details/book_details_screen.dart';
 import 'package:eqraa_book_store/feature/search/search_screen.dart';
 import 'package:flutter/material.dart';
 

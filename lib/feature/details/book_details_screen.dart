@@ -267,10 +267,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     borderRadius: BorderRadius.circular(35),
                   ),
                 ),
-                child: const Text(
-                  "Buy Now",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+                child: const Text("Buy Now", style: TextStyle(fontSize: 18)),
               ),
             ),
           ],
