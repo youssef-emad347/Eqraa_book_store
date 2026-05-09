@@ -1,13 +1,20 @@
+import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
 import 'package:eqraa_book_store/feature/authentication/forget_password/forget_password.dart';
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
 import 'package:eqraa_book_store/feature/home/home_screen.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
+import 'package:eqraa_book_store/feature/splash/splash_screen.dart';
+import 'package:eqraa_book_store/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -16,7 +23,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+   
+      
+   return BlocProvider(
+      create: (context) => AuthCubit(),
+      child: MaterialApp(
       theme: ThemeData(
         textTheme: GoogleFonts.lexendTextTheme(),
         inputDecorationTheme: InputDecorationTheme(
@@ -37,6 +48,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+       
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
       routes: {

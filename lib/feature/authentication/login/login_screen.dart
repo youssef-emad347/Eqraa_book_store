@@ -1,9 +1,12 @@
 import 'package:eqraa_book_store/core/widgets/main_button.dart';
+import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
+import 'package:eqraa_book_store/feature/authentication/cubit/auth_states.dart';
 import 'package:eqraa_book_store/feature/authentication/widget/custom_text_form_feild.dart';
 import 'package:eqraa_book_store/feature/authentication/widget/header.dart';
 import 'package:eqraa_book_store/feature/authentication/widget/options_login.dart';
 import 'package:eqraa_book_store/feature/authentication/widget/or_divider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,10 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isPasswordVisible = false;
 
-  final RegExp _emailRegex = RegExp(
-    r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$',
-  );
-
   @override
   void initState() {
     super.initState();
@@ -38,27 +37,19 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  // ✅ Validation بسيطة - Firebase هو اللي هيرفض لو غلط
   String? validateEmail(String value) {
     if (value.isEmpty) return 'Please enter your email';
-    if (!_emailRegex.hasMatch(value)) return 'Please enter a valid email';
     return null;
   }
 
   String? validatePassword(String value) {
     if (value.isEmpty) return 'Please enter your password';
-    if (value.length < 8) return 'Password must be at least 8 characters';
-    if (!RegExp(r'[A-Z]').hasMatch(value)) return 'Add uppercase letter';
-    if (!RegExp(r'[a-z]').hasMatch(value)) return 'Add lowercase letter';
-    if (!RegExp(r'[0-9]').hasMatch(value)) return 'Add number';
-    if (!RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'Add special character';
-    }
     return null;
   }
 
-  bool get _isEmailValid => validateEmail(emailController.text) == null;
-  bool get _isPasswordValid =>
-      validatePassword(passwordController.text) == null;
+  bool get _isEmailValid => emailController.text.isNotEmpty;
+  bool get _isPasswordValid => passwordController.text.isNotEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -156,19 +147,50 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: screenHeight * 0.02),
 
                         Center(
-                          child: MainButton(
-                            title: "Login",
-                            isEnabled: _isEmailValid && _isPasswordValid,
-                            onPressedFunction: () {
-                              if (_formKey.currentState!.validate()) {
-                                debugPrint("Login successful");
-                                debugPrint(emailController.text);
+                          child: BlocConsumer<AuthCubit, AuthStates>(
+                            listener: (context, state) {
+                              if (state is LoginSuccessState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                                // Navigator.pushReplacementNamed(context, '/home');
+                                debugPrint("Login Successful, navigate now!");
+                              } else if (state is LoginErrorState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                    backgroundColor: Colors.red,
+                                  ),
+                                );
                               }
+                            },
+                            builder: (context, state) {
+                              if (state is LoginLoadingState) {
+                                return const CircularProgressIndicator();
+                              }
+                              return MainButton(
+                                title: "Login",
+                                isEnabled: _isEmailValid && _isPasswordValid,
+                                onPressedFunction: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    AuthCubit.get(context).login(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                  }
+                                },
+                              );
                             },
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.2),
 
+                        // ✅ اتشالت الـ SizedBox الكبيرة (0.2) اللي كانت بتخبي الـ Row
+                        SizedBox(height: screenHeight * 0.03),
+
+                        // ✅ دلوقتي ظاهرة دايماً
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

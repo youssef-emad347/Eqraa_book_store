@@ -1,7 +1,10 @@
 import 'package:eqraa_book_store/core/widgets/main_button.dart';
+import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
+import 'package:eqraa_book_store/feature/authentication/cubit/auth_states.dart';
 import 'package:eqraa_book_store/feature/authentication/widget/custom_text_form_feild.dart';
 import 'package:eqraa_book_store/feature/authentication/widget/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -67,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         SizedBox(height: screenHeight * 0.03),
 
+                        // ── Name Field ──
                         CustomTextFormField(
                           hint: "Your Name",
                           prefixIcon: Icons.person_outline,
@@ -81,6 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         SizedBox(height: screenHeight * 0.0025),
 
+                        // ── Email Field ──
                         CustomTextFormField(
                           hint: "Email",
                           prefixIcon: Icons.email_outlined,
@@ -92,17 +97,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
                             }
-
                             if (!_emailRegex.hasMatch(value)) {
                               return 'Please enter a valid email address';
                             }
-
                             return null;
                           },
                         ),
 
                         SizedBox(height: screenHeight * 0.0025),
 
+                        // ── Phone Field ──
                         CustomTextFormField(
                           hint: "Your Phone",
                           prefixIcon: Icons.phone_outlined,
@@ -111,22 +115,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your phone number';
                             }
-
                             if (!RegExp(r'^\d{11}$').hasMatch(value)) {
                               return 'Please enter a valid 11-digit phone number';
                             }
-
                             return null;
                           },
                         ),
 
                         SizedBox(height: screenHeight * 0.0025),
 
+                        // ── Password Field ──
                         CustomTextFormField(
                           hint: "Password",
                           prefixIcon: Icons.lock_outlined,
                           obscure: !_isPasswordVisible,
-                          showPasswordStrength: true,
                           controller: passwordController,
                           onChanged: (value) {
                             setState(() {});
@@ -144,39 +146,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                             },
                           ),
+                          // ✅ رسالة واحدة بس لو الباسورد ناقص شرط - التفاصيل في الـ widget تحت
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
                             }
-
-                            if (value.length < 8) {
-                              return 'Password must be at least 8 characters';
+                            if (value.length < 8 ||
+                                !RegExp(r'[A-Z]').hasMatch(value) ||
+                                !RegExp(r'[a-z]').hasMatch(value) ||
+                                !RegExp(r'[0-9]').hasMatch(value) ||
+                                !RegExp(
+                                  r'[!@#\$%^&*(),.?":{}|<>]',
+                                ).hasMatch(value)) {
+                              return 'Please complete all password requirements above';
                             }
-
-                            if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                              return 'Add at least one uppercase letter';
-                            }
-
-                            if (!RegExp(r'[a-z]').hasMatch(value)) {
-                              return 'Add at least one lowercase letter';
-                            }
-
-                            if (!RegExp(r'[0-9]').hasMatch(value)) {
-                              return 'Add at least one number';
-                            }
-
-                            if (!RegExp(
-                              r'[!@#\$%^&*(),.?":{}|<>]',
-                            ).hasMatch(value)) {
-                              return 'Add at least one special character';
-                            }
-
                             return null;
                           },
                         ),
 
+                        
+
                         SizedBox(height: screenHeight * 0.0025),
 
+                        // ── Confirm Password Field ──
                         CustomTextFormField(
                           hint: "Confirm Password",
                           prefixIcon: Icons.lock_outlined,
@@ -202,37 +194,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             if (value == null || value.isEmpty) {
                               return 'Please confirm your password';
                             }
-
                             if (value != passwordController.text) {
                               return 'Passwords do not match';
                             }
-
                             return null;
                           },
                         ),
+
                         SizedBox(height: screenHeight * 0.03),
 
+                        // ── Sign Up Button ──
                         Center(
-                          child: MainButton(
-                            title: "Sign Up",
-                            isEnabled: true,
-                            onPressedFunction: () {
-                              if (_formKey.currentState!.validate()) {
-                                debugPrint("Sign up successful!");
-                                debugPrint("Email: ${emailController.text}");
-                                debugPrint(
-                                  "Password: ${passwordController.text}",
+                          child: BlocConsumer<AuthCubit, AuthStates>(
+                            listener: (context, state) {
+                              if (state is SignUpSuccessState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  "/login",
+                                );
+                              } else if (state is SignUpErrorState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(state.message),
+                                    backgroundColor: Colors.red,
+                                  ),
                                 );
                               }
                             },
+                            builder: (context, state) {
+                              if (state is SignUpLoadingState) {
+                                return const CircularProgressIndicator();
+                              }
+                              return MainButton(
+                                title: "Sign Up",
+                                isEnabled: true,
+                                onPressedFunction: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    AuthCubit.get(context).signUp(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      phone: phoneController.text,
+                                      password: passwordController.text,
+                                    );
+                                  }
+                                },
+                              );
+                            },
                           ),
                         ),
+
                         SizedBox(height: screenHeight * 0.02),
+
+                        // ── Login Link ──
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text("Already have an account? "),
-
                             GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(context, "/login");
