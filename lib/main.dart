@@ -5,6 +5,7 @@ import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dar
 import 'package:eqraa_book_store/feature/home/home_screen.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        textTheme: GoogleFonts.lexendTextTheme(),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
             borderSide: const BorderSide(color: Colors.grey, width: 1.5),
@@ -36,12 +38,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
       routes: {
-        "/onboarding": (context) => OnboardingScreen(),
-        "/login": (context) => LoginScreen(),
-        "/signup": (context) => SignUpScreen(),
-        "/forgetpassword": (context) => ForgetPassword(),
+        "/onboarding": (context) => const OnboardingScreen(),
+        "/login": (context) => const LoginScreen(),
+        "/signup": (context) => const SignUpScreen(),
+        "/forgetpassword": (context) => const ForgetPassword(),
       },
     );
   }
