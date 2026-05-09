@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  static final mainColor = Color(0xff3255FB);
+  static const mainColor = Color(0xff3255FB);
 }
