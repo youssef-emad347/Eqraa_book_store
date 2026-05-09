@@ -1,3 +1,4 @@
+import 'package:eqraa_book_store/feature/authentication/forget_password/forget_password.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
         "/onboarding": (context) => OnboardingScreen(),
         "/login": (context) => LoginScreen(),
         "/signup": (context) => SignUpScreen(),
+        "/forgetpassword": (context) => ForgetPassword(),
       },
     );
   }
