@@ -2,6 +2,8 @@ import 'package:eqraa_book_store/core/widgets/book_card.dart';
 import 'package:eqraa_book_store/core/widgets/search_text_field.dart';
 import 'package:eqraa_book_store/core/widgets/separate_text.dart';
 import 'package:eqraa_book_store/feature/details/book_details_screen.dart';
+import 'package:eqraa_book_store/core/data_source/book_api_service.dart';
+import 'package:eqraa_book_store/feature/home/model/book_model.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -13,27 +15,6 @@ class SearchScreen extends StatelessWidget {
       'The Morac Book 1',
       'Elvenwood Forest',
       'Stillwell Long Island',
-    ];
-
-    final List<Map<String, dynamic>> popularBooks = [
-      {
-        'title': 'Stillwell Long Island',
-        'author': 'Adam Smith',
-        'imageUrl': 'https://covers.openlibrary.org/b/id/14627227-L.jpg',
-        'price': 120.0,
-        'rating': 4.5,
-        'language': 'English',
-        'pages': 316,
-      },
-      {
-        'title': 'Warmage Book 2',
-        'author': 'Terry Mancour',
-        'imageUrl': 'https://covers.openlibrary.org/b/id/8225261-L.jpg',
-        'price': 60.0,
-        'rating': 5.0,
-        'language': 'English',
-        'pages': 450,
-      },
     ];
 
     return Scaffold(
@@ -87,40 +68,65 @@ class SearchScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.only(top: 10),
-                sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                    childAspectRatio: 0.55,
-                  ),
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final book = popularBooks[index];
-                    return BookCard(
-                      title: book['title'] as String,
-                      author: book['author'] as String,
-                      imageUrl: book['imageUrl'] as String,
-                      price: book['price'] as double,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BookDetailsScreen(
-                              title: book['title'] as String,
-                              author: book['author'] as String,
-                              imageUrl: book['imageUrl'] as String,
-                              price: book['price'] as double,
-                              rating: book['rating'] as double,
-                              language: book['language'] as String,
-                              pages: book['pages'] as int,
-                            ),
+              SliverToBoxAdapter(
+                child: FutureBuilder<List<BookModel>>(
+                  future: BookApiService().fetchBooks(query: 'popular'),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text('No popular books found'),
+                      );
+                    }
+
+                    final popularBooks = snapshot.data!;
+                    return GridView.builder(
+                      padding: const EdgeInsets.only(top: 10),
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 15,
+                            crossAxisSpacing: 15,
+                            childAspectRatio: 0.55,
                           ),
+                      itemCount: popularBooks.length,
+                      itemBuilder: (context, index) {
+                        final book = popularBooks[index];
+                        return BookCard(
+                          title: book.title,
+                          author: book.author,
+                          imageUrl: book.imageUrl,
+                          price: book.price,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookDetailsScreen(
+                                  title: book.title,
+                                  author: book.author,
+                                  imageUrl: book.imageUrl,
+                                  price: book.price,
+                                  rating: book.rating,
+                                  language: book.language,
+                                  pages: book.pages,
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                     );
-                  }, childCount: popularBooks.length),
+                  },
                 ),
               ),
             ],

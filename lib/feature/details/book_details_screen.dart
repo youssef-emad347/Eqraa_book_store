@@ -86,7 +86,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 alignment: Alignment.topCenter,
                 children: [
                   Container(
-                    height: 400,
                     width: double.infinity,
                     margin: EdgeInsets.only(top: screenHeight * 0.12),
                     padding: EdgeInsets.fromLTRB(
@@ -137,7 +136,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                             Expanded(
                               child: _StatItem(
                                 label: "Ratings",
-                                value: widget.rating.toString(),
+                                value: widget.rating.toStringAsFixed(2),
                               ),
                             ),
                           ],
@@ -146,8 +145,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     ),
                   ),
                   Container(
-                    height: screenHeight * 0.35,
-                    width: screenWidth * 0.55,
+                    height: screenHeight * 0.30,
+                    width: screenWidth * 0.45,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(

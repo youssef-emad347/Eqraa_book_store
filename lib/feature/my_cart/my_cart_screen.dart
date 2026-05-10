@@ -8,6 +8,9 @@ import 'package:eqraa_book_store/feature/my_cart/widget/order_summary_widget.dar
 import 'package:eqraa_book_store/feature/my_cart/widget/promo_code_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eqraa_book_store/core/data_source/book_api_service.dart';
+import 'package:eqraa_book_store/feature/home/model/book_model.dart';
+import 'package:eqraa_book_store/feature/details/book_details_screen.dart';
 
 class MyCartScreen extends StatelessWidget {
   const MyCartScreen({super.key});
@@ -70,26 +73,61 @@ class MyCartScreen extends StatelessWidget {
                 // Similar Books Section directly here
                 SeparateText(text: "Similar Books", onTap: () {}),
                 const SizedBox(height: 15),
-                SizedBox(
-                  height: screenHeight * 0.3,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 15),
-                    itemBuilder: (context, index) {
-                      return SizedBox(
-                        width: screenWidth * 0.4,
-                        child: const BookCard(
-                          title: "The Morac Book 1",
-                          author: "Adam Smith",
-                          imageUrl:
-                              "https://covers.openlibrary.org/b/id/14627227-L.jpg",
-                          price: 60.00,
-                        ),
+                FutureBuilder<List<BookModel>>(
+                  future: BookApiService().fetchBooks(query: 'similar'),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(
+                        child: Text('No similar books found'),
                       );
-                    },
-                  ),
+                    }
+
+                    final similarBooks = snapshot.data!;
+                    return SizedBox(
+                      height: screenHeight * 0.3,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        // Limit to 5 similar books as in the original layout, or show all available up to length
+                        itemCount: similarBooks.length > 5
+                            ? 5
+                            : similarBooks.length,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(width: 15),
+                        itemBuilder: (context, index) {
+                          final book = similarBooks[index];
+                          return SizedBox(
+                            width: screenWidth * 0.4,
+                            child: BookCard(
+                              title: book.title,
+                              author: book.author,
+                              imageUrl: book.imageUrl,
+                              price: book.price,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BookDetailsScreen(
+                                      title: book.title,
+                                      author: book.author,
+                                      imageUrl: book.imageUrl,
+                                      price: book.price,
+                                      rating: book.rating,
+                                      language: book.language,
+                                      pages: book.pages,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
                 ),
 
                 const SizedBox(height: 25),

@@ -4,6 +4,7 @@ import 'package:eqraa_book_store/feature/authentication/forget_password/forget_p
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
+import 'package:eqraa_book_store/feature/home/cubit/home_cubit.dart';
 import 'package:eqraa_book_store/core/data_source/hive_service.dart';
 import 'package:eqraa_book_store/feature/main_layout.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => CartCubit()),
+        BlocProvider(create: (context) => HomeCubit()..getInitialData()),
       ],
       child: MaterialApp(
         theme: ThemeData(
