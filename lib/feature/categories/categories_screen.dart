@@ -1,4 +1,5 @@
 import 'package:eqraa_book_store/core/constants/text_style.dart';
+import 'package:eqraa_book_store/feature/home/widgets/category_books_screen.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -26,6 +27,10 @@ class CategoriesScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text(
           "Categories",
           style: StylesManager.textStyle24px.copyWith(color: Colors.black),
@@ -43,15 +48,27 @@ class CategoriesScreen extends StatelessWidget {
           ),
           itemCount: categories.length,
           itemBuilder: (context, index) {
-            return Container(
-              decoration: BoxDecoration(
-                color: categories[index]['color'],
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Center(
-                child: Text(
-                  categories[index]['name'],
-                  style: StylesManager.optionLogin20px,
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CategoryBooksScreen(
+                      categoryName: categories[index]['name'],
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: categories[index]['color'],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    categories[index]['name'],
+                    style: StylesManager.optionLogin20px,
+                  ),
                 ),
               ),
             );
