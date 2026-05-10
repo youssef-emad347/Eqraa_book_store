@@ -46,20 +46,32 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: Image.asset("assets/arrowIcon.png", height: screenHeight * 0.025),
+          icon: Image.asset(
+            "assets/arrowIcon.png",
+            height: screenHeight * 0.025,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border_outlined, size: screenWidth * 0.06),
+            icon: Icon(
+              Icons.favorite_border_outlined,
+              size: screenWidth * 0.06,
+            ),
             onPressed: () {},
           ),
           IconButton(
-            icon: Image.asset("assets/shareIcon.png", height: screenHeight * 0.03),
+            icon: Image.asset(
+              "assets/shareIcon.png",
+              height: screenHeight * 0.03,
+            ),
             onPressed: () {},
           ),
           IconButton(
-            icon: Image.asset("assets/cartIcon.png", height: screenHeight * 0.03),
+            icon: Image.asset(
+              "assets/cartIcon.png",
+              height: screenHeight * 0.03,
+            ),
             onPressed: () {
               Navigator.pushNamed(context, '/mycart');
             },
@@ -75,6 +87,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 alignment: Alignment.topCenter,
                 children: [
                   Container(
+                    height: 400,
                     width: double.infinity,
                     margin: EdgeInsets.only(top: screenHeight * 0.12),
                     padding: EdgeInsets.fromLTRB(
@@ -88,6 +101,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
@@ -133,8 +147,8 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                     ),
                   ),
                   Container(
-                    height: screenHeight * 0.45,
-                    width: screenWidth * 0.65,
+                    height: screenHeight * 0.35,
+                    width: screenWidth * 0.55,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
@@ -301,13 +315,15 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  CartCubit.get(context).addToCart(CartItemModel(
-                    id: DateTime.now().toString(),
-                    title: widget.title,
-                    author: widget.author,
-                    imageUrl: widget.imageUrl,
-                    price: widget.price,
-                  ));
+                  CartCubit.get(context).addToCart(
+                    CartItemModel(
+                      id: DateTime.now().toString(),
+                      title: widget.title,
+                      author: widget.author,
+                      imageUrl: widget.imageUrl,
+                      price: widget.price,
+                    ),
+                  );
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Added to cart!"),
