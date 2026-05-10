@@ -4,6 +4,8 @@ import 'package:eqraa_book_store/feature/authentication/forget_password/forget_p
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
+import 'package:eqraa_book_store/feature/home/model/book_model.dart';
+import 'package:hive/hive.dart';
 import 'package:eqraa_book_store/feature/main_layout.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
 import 'package:eqraa_book_store/feature/splash/splash_screen.dart';
@@ -13,10 +15,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  
+  await Hive.initFlutter();
+  Hive.registerAdapter(BookModelAdapter());
+  await Hive.openBox<BookModel>('favorites');
+  
   runApp(const MyApp());
 }
 
