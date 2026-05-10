@@ -220,9 +220,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     backgroundColor: Colors.green,
                                   ),
                                 );
-                                Navigator.pushReplacementNamed(
+                                Navigator.pushNamedAndRemoveUntil(
                                   context,
-                                  "/mainlayout",
+                                  '/mainlayout',
+                                  (route) => false,
                                 );
                               } else if (state is SignUpErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(

@@ -3,7 +3,6 @@ import 'package:eqraa_book_store/core/constants/text_style.dart';
 import 'package:eqraa_book_store/feature/my_cart/cubit/cart_cubit.dart';
 import 'package:eqraa_book_store/feature/my_cart/cubit/cart_states.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   final String title;

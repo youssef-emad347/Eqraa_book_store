@@ -21,12 +21,19 @@ class FirebaseDataSource {
       password: password,
     );
 
+    // Update display name so we can access it easily in the UI
+    await credential.user!.updateDisplayName(user.name);
     // store in firestore
     try {
-      print("Attempting to store user data in Firestore for UID: ${credential.user!.uid}");
-      await firestore.collection('users').doc(credential.user!.uid).set(
-        user.toJson(),
-      ).timeout(const Duration(seconds: 10)); // Timeout after 10s
+      print(
+        "Attempting to store user data in Firestore for UID: ${credential.user!.uid}",
+      );
+
+      await firestore
+          .collection('users')
+          .doc(credential.user!.uid)
+          .set(user.toJson());
+
       print("Firestore Success!");
     } catch (e) {
       print("Firestore Error: $e");

@@ -5,7 +5,6 @@ import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
 import 'package:eqraa_book_store/feature/home/model/book_model.dart';
-import 'package:hive/hive.dart';
 import 'package:eqraa_book_store/feature/main_layout.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
 import 'package:eqraa_book_store/feature/splash/splash_screen.dart';

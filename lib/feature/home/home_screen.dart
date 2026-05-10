@@ -2,6 +2,7 @@ import 'package:eqraa_book_store/core/constants/text_style.dart';
 import 'package:eqraa_book_store/core/widgets/book_card.dart';
 import 'package:eqraa_book_store/core/widgets/search_text_field.dart';
 import 'package:eqraa_book_store/core/widgets/separate_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:eqraa_book_store/feature/categories/categories_screen.dart';
 import 'package:eqraa_book_store/feature/home/cubit/home_cubit.dart';
 import 'package:eqraa_book_store/feature/home/cubit/home_states.dart';
@@ -56,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Hello, Willie 👋🏻',
+                                  'Hello, ${FirebaseAuth.instance.currentUser?.displayName ?? "User"} 👋🏻',
                                   style: StylesManager.textStyle15px.copyWith(
                                     fontSize: screenWidth * 0.035,
                                   ),
@@ -131,8 +132,9 @@ class HomeScreen extends StatelessWidget {
                       BlocBuilder<HomeCubit, HomeStates>(
                         buildWhen: (previous, current) {
                           if (current is HomeSuccessState ||
-                              current is HomeLoadingState)
+                              current is HomeLoadingState) {
                             return true;
+                          }
                           return false;
                         },
                         builder: (context, state) {

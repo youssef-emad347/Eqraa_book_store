@@ -1,7 +1,6 @@
 import 'package:eqraa_book_store/core/widgets/book_card.dart';
 import 'package:eqraa_book_store/feature/home/cubit/home_cubit.dart';
 import 'package:eqraa_book_store/feature/home/cubit/home_states.dart';
-import 'package:eqraa_book_store/feature/home/model/book_model.dart';
 import 'package:eqraa_book_store/feature/details/book_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

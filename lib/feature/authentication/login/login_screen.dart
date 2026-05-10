@@ -145,7 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text("Please enter your email first"),
+                                    content: Text(
+                                      "Please enter your email first",
+                                    ),
                                     backgroundColor: Colors.orange,
                                   ),
                                 );
@@ -174,7 +176,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                     backgroundColor: Colors.green,
                                   ),
                                 );
-                                Navigator.pushReplacementNamed(context, '/mainlayout');
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  '/mainlayout',
+                                  (route) => false,
+                                );
                               } else if (state is LoginErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -204,10 +210,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
 
-                        // ✅ اتشالت الـ SizedBox الكبيرة (0.2) اللي كانت بتخبي الـ Row
                         SizedBox(height: screenHeight * 0.03),
 
-                        // ✅ دلوقتي ظاهرة دايماً
                         Center(
                           child: Wrap(
                             alignment: WrapAlignment.center,

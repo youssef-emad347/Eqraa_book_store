@@ -1,5 +1,7 @@
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/core/constants/text_style.dart';
+import 'package:eqraa_book_store/feature/favourite/favourite_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -28,11 +30,11 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
-              "Willie 👋🏻",
+              FirebaseAuth.instance.currentUser?.displayName ?? "User",
               style: StylesManager.textStyle24px,
             ),
-            const Text(
-              "willie@example.com",
+            Text(
+              FirebaseAuth.instance.currentUser?.email ?? "User",
               style: StylesManager.textStyle15px,
             ),
             const SizedBox(height: 30),
@@ -44,7 +46,14 @@ class ProfileScreen extends StatelessWidget {
             _buildProfileOption(
               icon: Icons.favorite_outline,
               title: "Wishlist",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FavouriteScreen(),
+                  ),
+                );
+              },
             ),
             _buildProfileOption(
               icon: Icons.settings_outlined,
@@ -61,7 +70,13 @@ class ProfileScreen extends StatelessWidget {
               title: "Logout",
               titleColor: Colors.red,
               iconColor: Colors.red,
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/login',
+                  (route) => false,
+                );
+              },
             ),
           ],
         ),

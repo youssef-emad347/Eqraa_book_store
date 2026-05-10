@@ -2,12 +2,13 @@ import 'package:eqraa_book_store/core/data_source/firebase_data_source.dart';
 import 'package:eqraa_book_store/feature/authentication/cubit/auth_states.dart';
 import 'package:eqraa_book_store/feature/authentication/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInatialState());
 
-  static AuthCubit get(context) => BlocProvider.of(context);
+  static AuthCubit get(BuildContext context) => BlocProvider.of(context);
 
   final FirebaseDataSource _dataSource = FirebaseDataSource();
 

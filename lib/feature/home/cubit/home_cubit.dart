@@ -1,6 +1,7 @@
 import 'package:eqraa_book_store/core/data_source/book_api_service.dart';
 import 'package:eqraa_book_store/feature/home/cubit/home_states.dart';
 import 'package:eqraa_book_store/feature/home/model/book_model.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
@@ -10,7 +11,7 @@ class HomeCubit extends Cubit<HomeStates> {
 
   HomeCubit() : super(HomeInitialState());
 
-  static HomeCubit get(context) => BlocProvider.of(context);
+  static HomeCubit get(BuildContext context) => BlocProvider.of(context);
 
   List<BookModel> books = [];
   List<BookModel> newArrivals = [];

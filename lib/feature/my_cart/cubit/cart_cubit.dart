@@ -1,10 +1,11 @@
 import 'package:eqraa_book_store/feature/my_cart/cubit/cart_states.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartCubit extends Cubit<CartStates> {
   CartCubit() : super(CartInitialState());
 
-  static CartCubit get(context) => BlocProvider.of(context);
+  static CartCubit get(BuildContext context) => BlocProvider.of(context);
 
   List<CartItemModel> cartItems = []; // تبدأ فاضية
 
