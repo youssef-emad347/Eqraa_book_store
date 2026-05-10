@@ -1,4 +1,5 @@
 import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
+import 'package:eqraa_book_store/feature/search/cubit/search_cubit.dart';
 import 'package:eqraa_book_store/feature/my_cart/cubit/cart_cubit.dart';
 import 'package:eqraa_book_store/feature/authentication/forget_password/forget_password.dart';
 import 'package:eqraa_book_store/core/constants/constants.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => CartCubit()),
         BlocProvider(create: (context) => HomeCubit()..getInitialData()),
+        BlocProvider(create: (context) => SearchCubit()),
       ],
       child: MaterialApp(
         theme: ThemeData(

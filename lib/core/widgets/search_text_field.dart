@@ -7,6 +7,8 @@ class SearchTextField extends StatelessWidget {
   final bool autofocus;
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final Widget? suffixIcon;
+  final VoidCallback? onSuffixTap;
 
   const SearchTextField({
     super.key,
@@ -15,6 +17,8 @@ class SearchTextField extends StatelessWidget {
     this.autofocus = false,
     this.controller,
     this.onChanged,
+    this.suffixIcon,
+    this.onSuffixTap,
   });
 
   @override
@@ -51,14 +55,19 @@ class SearchTextField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(
           vertical: 20,
         ),
-        suffixIcon: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Image.asset(
-            "assets/filterIcon.png",
-            height: 20,
-            width: 20,
-          ),
-        ),
+        suffixIcon: suffixIcon != null
+            ? InkWell(
+                onTap: onSuffixTap,
+                child: suffixIcon,
+              )
+            : Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Image.asset(
+                  "assets/filterIcon.png",
+                  height: 20,
+                  width: 20,
+                ),
+              ),
       ),
     );
   }
