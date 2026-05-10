@@ -154,6 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                           ),
                           // ✅ رسالة واحدة بس لو الباسورد ناقص شرط - التفاصيل في الـ widget تحت
+                          showPasswordStrength: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
