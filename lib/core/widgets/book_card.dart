@@ -7,6 +7,8 @@ class BookCard extends StatelessWidget {
   final String imageUrl;
   final double price;
   final VoidCallback? onTap;
+  final VoidCallback? onFavoriteToggle;
+  final bool isFavorite;
 
   const BookCard({
     super.key,
@@ -15,6 +17,8 @@ class BookCard extends StatelessWidget {
     required this.imageUrl,
     required this.price,
     this.onTap,
+    this.onFavoriteToggle,
+    this.isFavorite = false,
   });
 
   @override
@@ -43,17 +47,22 @@ class BookCard extends StatelessWidget {
               Positioned(
                 top: 10,
                 right: 10,
-                child: Container(
-                  height: screenWidth * 0.08,
-                  width: screenWidth * 0.08,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Icon(
-                    Icons.favorite_border_outlined,
-                    color: Colors.black,
-                    size: screenWidth * 0.05,
+                child: GestureDetector(
+                  onTap: onFavoriteToggle,
+                  child: Container(
+                    height: screenWidth * 0.08,
+                    width: screenWidth * 0.08,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Icon(
+                      isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border_outlined,
+                      color: isFavorite ? Colors.red : Colors.black,
+                      size: screenWidth * 0.05,
+                    ),
                   ),
                 ),
               ),
