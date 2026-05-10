@@ -1,13 +1,12 @@
 import 'package:eqraa_book_store/core/data_source/book_api_service.dart';
+import 'package:eqraa_book_store/core/data_source/hive_service.dart';
 import 'package:eqraa_book_store/feature/home/cubit/home_states.dart';
 import 'package:eqraa_book_store/feature/home/model/book_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 
 class HomeCubit extends Cubit<HomeStates> {
   final BookApiService _apiService = BookApiService();
-  final Box<BookModel> _favoritesBox = Hive.box<BookModel>('favorites');
 
   HomeCubit() : super(HomeInitialState());
 
@@ -21,7 +20,6 @@ class HomeCubit extends Cubit<HomeStates> {
   Future<void> getInitialData() async {
     emit(HomeLoadingState());
     try {
-      // Fetch new arrivals (query 'new') and popular books (random default) in parallel
       final results = await Future.wait([
         _apiService.fetchBooks(query: 'new'),
         _apiService.fetchBooks(),
@@ -33,7 +31,9 @@ class HomeCubit extends Cubit<HomeStates> {
       _syncFavorites(newArrivals);
       _syncFavorites(books);
 
-      emit(HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)));
+      emit(
+        HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)),
+      );
     } catch (e) {
       emit(HomeErrorState(e.toString()));
     }
@@ -46,7 +46,9 @@ class HomeCubit extends Cubit<HomeStates> {
     try {
       books = await _apiService.fetchBooks(query: query, page: currentPage);
       _syncFavorites(books);
-      emit(HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)));
+      emit(
+        HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)),
+      );
     } catch (e) {
       emit(HomeErrorState(e.toString()));
     }
@@ -64,15 +66,19 @@ class HomeCubit extends Cubit<HomeStates> {
       );
       _syncFavorites(moreBooks);
       books.addAll(moreBooks);
-      emit(HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)));
+      emit(
+        HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)),
+      );
     } catch (e) {
-      emit(HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)));
+      emit(
+        HomeSuccessState(List.from(books), newArrivals: List.from(newArrivals)),
+      );
     }
   }
 
   void _syncFavorites(List<BookModel> bookList) {
     for (var book in bookList) {
-      if (_favoritesBox.containsKey(book.title)) {
+      if (HiveService.isFavorite(book.title)) {
         book.isFavorite = true;
       }
     }
@@ -83,9 +89,9 @@ class HomeCubit extends Cubit<HomeStates> {
     book.isFavorite = !book.isFavorite;
 
     if (book.isFavorite) {
-      _favoritesBox.put(book.title, book);
+      HiveService.addFavorite(book);
     } else {
-      _favoritesBox.delete(book.title);
+      HiveService.removeFavorite(book.title);
     }
 
     emit(

@@ -219,12 +219,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              // 4. Main Books Grid with its own BlocBuilder
               BlocBuilder<HomeCubit, HomeStates>(
                 buildWhen: (previous, current) {
-                  // Only rebuild if it's initial load, success state (books list might change), or loading more
                   if (current is HomeLoadingState ||
-                      current is HomeSuccessState ||
+                      // current is HomeSuccessState ||
                       current is HomeLoadingMoreState) {
                     return true;
                   }

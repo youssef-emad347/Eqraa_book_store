@@ -1,5 +1,6 @@
 import 'package:eqraa_book_store/core/constants/text_style.dart';
 import 'package:eqraa_book_store/core/widgets/book_card.dart';
+import 'package:eqraa_book_store/core/data_source/hive_service.dart';
 import 'package:eqraa_book_store/feature/details/book_details_screen.dart';
 import 'package:eqraa_book_store/feature/home/model/book_model.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class FavouriteScreen extends StatelessWidget {
         centerTitle: true,
       ),
       body: ValueListenableBuilder(
-        valueListenable: Hive.box<BookModel>('favorites').listenable(),
+        valueListenable: HiveService.favoritesBox.listenable(),
         builder: (context, Box<BookModel> box, _) {
           final favoriteBooks = box.values.toList();
 
@@ -65,7 +66,7 @@ class FavouriteScreen extends StatelessWidget {
                   price: book.price,
                   isFavorite: true,
                   onFavoriteToggle: () {
-                    box.delete(book.title);
+                    HiveService.removeFavorite(book.title);
                   },
                   onTap: () {
                     Navigator.push(
