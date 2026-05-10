@@ -49,4 +49,8 @@ class FirebaseDataSource {
       throw Exception("No user signed in to update password.");
     }
   }
+
+  Future<void> signOut() async {
+    await firebaseAuth.signOut();
+  }
 }

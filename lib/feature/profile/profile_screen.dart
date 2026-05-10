@@ -1,6 +1,8 @@
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/core/constants/text_style.dart';
+import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
 import 'package:eqraa_book_store/feature/favourite/favourite_screen.dart';
+import 'package:eqraa_book_store/feature/my_cart/my_cart_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +43,12 @@ class ProfileScreen extends StatelessWidget {
             _buildProfileOption(
               icon: Icons.shopping_bag_outlined,
               title: "My Orders",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyCartScreen()),
+                );
+              },
             ),
             _buildProfileOption(
               icon: Icons.favorite_outline,
@@ -71,6 +78,7 @@ class ProfileScreen extends StatelessWidget {
               titleColor: Colors.red,
               iconColor: Colors.red,
               onTap: () {
+                AuthCubit.get(context).logout();
                 Navigator.pushNamedAndRemoveUntil(
                   context,
                   '/login',

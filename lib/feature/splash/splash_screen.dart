@@ -1,4 +1,5 @@
 import 'package:eqraa_book_store/core/constants/constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,7 +14,11 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.pushReplacementNamed(context, "/onboarding");
+        if (FirebaseAuth.instance.currentUser != null) {
+          Navigator.pushReplacementNamed(context, "/mainlayout");
+        } else {
+          Navigator.pushReplacementNamed(context, "/onboarding");
+        }
       }
     });
     super.initState();

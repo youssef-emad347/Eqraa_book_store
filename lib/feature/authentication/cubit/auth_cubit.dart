@@ -89,4 +89,9 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(ResetPasswordErrorState(message: e.toString()));
     }
   }
+
+  Future<void> logout() async {
+    await _dataSource.signOut();
+    emit(AuthInatialState());
+  }
 }
