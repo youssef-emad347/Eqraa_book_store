@@ -1,5 +1,8 @@
 import 'package:eqraa_book_store/core/constants/constants.dart';
+import 'package:eqraa_book_store/feature/categories/categories_screen.dart';
+import 'package:eqraa_book_store/feature/favourite/favourite_screen.dart';
 import 'package:eqraa_book_store/feature/home/home_screen.dart';
+import 'package:eqraa_book_store/feature/profile/profile_screen.dart';
 import 'package:eqraa_book_store/feature/search/search_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +19,9 @@ class _MainLayoutState extends State<MainLayout> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const SearchScreen(),
-    const Center(child: Text("Categories Screen")),
-    const Center(child: Text("Favourite Screen")),
-    const Center(child: Text("Profile Screen")),
+    const CategoriesScreen(),
+    const FavouriteScreen(),
+    const ProfileScreen(),
   ];
 
   @override

@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'rating': 4.5,
       'language': 'English',
       'pages': 180,
+      'isFavorite': false,
     },
     {
       'title': 'To Kill a Mockingbird',
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'rating': 4.8,
       'language': 'English',
       'pages': 281,
+      'isFavorite': false,
     },
     {
       'title': '1984',
@@ -43,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'rating': 4.7,
       'language': 'English',
       'pages': 328,
+      'isFavorite': false,
     },
     {
       'title': 'Pride and Prejudice',
@@ -52,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'rating': 4.6,
       'language': 'English',
       'pages': 279,
+      'isFavorite': false,
     },
     {
       'title': 'The Catcher in the Rye',
@@ -61,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'rating': 4.2,
       'language': 'English',
       'pages': 214,
+      'isFavorite': false,
     },
     {
       'title': 'Harry Potter and the Sorcerer\'s Stone',
@@ -70,6 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
       'rating': 4.9,
       'language': 'English',
       'pages': 309,
+      'isFavorite': false,
     },
   ];
 
@@ -106,28 +112,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           SizedBox(width: screenWidth * 0.04),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Hello, Willie 👋🏻",
-                                  style: StylesManager.textStyle15px.copyWith(
-                                    fontSize: screenWidth * 0.035,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Hello, Willie 👋🏻",
+                                style: StylesManager.textStyle15px.copyWith(
+                                  fontSize: screenWidth * 0.035,
                                 ),
-                                Text(
-                                  "Keep exploring",
-                                  style: StylesManager.textStyle24px.copyWith(
-                                    fontSize: screenWidth * 0.06,
-                                  ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Text(
+                                "Keep exploring",
+                                style: StylesManager.textStyle24px.copyWith(
+                                  fontSize: screenWidth * 0.06,
                                 ),
-                              ],
-                            ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
                           ),
                           const Spacer(),
                           Container(
@@ -140,10 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             height: screenHeight * 0.06,
                             width: screenHeight * 0.06,
-                            child: Image.asset(
-                              "assets/cartIcon.png",
-                              scale: 2,
-                            ),
+                            child: Image.asset("assets/cartIcon.png", scale: 1),
                           ),
                         ],
                       ),
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SeparateText(text: "New Arrivals"),
                     SizedBox(height: screenHeight * 0.015),
                     SizedBox(
-                      height: screenHeight * 0.2,
+                      height: screenHeight * 0.15,
                       child: ListView.builder(
                         clipBehavior: Clip.none,
                         scrollDirection: Axis.horizontal,
@@ -201,6 +202,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     author: book['author'] as String,
                     imageUrl: book['imageUrl'] as String,
                     price: book['price'] as double,
+                    isFavorite: book['isFavorite'] as bool,
+                    onFavoriteToggle: () {
+                      setState(() {
+                        book['isFavorite'] = !book['isFavorite'];
+                      });
+                    },
                     onTap: () {
                       Navigator.push(
                         context,
