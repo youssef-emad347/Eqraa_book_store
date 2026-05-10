@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SeparateText(text: "New Arrivals"),
                     SizedBox(height: screenHeight * 0.015),
                     SizedBox(
-                      height: screenHeight * 0.18,
+                      height: screenHeight * 0.2,
                       child: ListView.builder(
                         clipBehavior: Clip.none,
                         scrollDirection: Axis.horizontal,
@@ -192,7 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
                   crossAxisSpacing: 15,
-                  childAspectRatio: 0.62,
+                  childAspectRatio: 0.6,
                 ),
                 delegate: SliverChildBuilderDelegate((context, index) {
                   final book = books[index];

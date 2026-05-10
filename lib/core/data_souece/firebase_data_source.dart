@@ -33,4 +33,13 @@ class FirebaseDataSource {
       throw Exception("Auth succeeded but Firestore failed: $e");
     }
   }
+
+  Future<void> updatePassword(String newPassword) async {
+    final user = firebaseAuth.currentUser;
+    if (user != null) {
+      await user.updatePassword(newPassword);
+    } else {
+      throw Exception("No user signed in to update password.");
+    }
+  }
 }

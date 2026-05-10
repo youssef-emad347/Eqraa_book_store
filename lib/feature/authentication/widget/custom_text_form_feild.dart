@@ -9,6 +9,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final bool showPasswordStrength;
+  final TextInputType? keyboardType;
 
   const CustomTextFormField({
     super.key,
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatefulWidget {
     this.validator,
     this.onChanged,
     this.showPasswordStrength = false,
+    this.keyboardType,
   });
 
   @override
@@ -46,6 +48,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           TextFormField(
             controller: widget.controller,
             obscureText: widget.obscure,
+            keyboardType: widget.keyboardType,
             validator: widget.validator,
             onChanged: (value) {
               setState(() => _value = value);
@@ -106,11 +109,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             size: 18,
           ),
           const SizedBox(width: 8),
-          Text(
-            text,
-            style: TextStyle(
-              color: isValid ? Colors.green : Colors.red,
-              fontSize: 13,
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: isValid ? Colors.green : Colors.red,
+                fontSize: 12,
+              ),
             ),
           ),
         ],

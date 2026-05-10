@@ -70,7 +70,6 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                 alignment: Alignment.topCenter,
                 children: [
                   Container(
-                    height: screenHeight * 0.55,
                     width: double.infinity,
                     margin: EdgeInsets.only(top: screenHeight * 0.12),
                     padding: EdgeInsets.fromLTRB(
@@ -84,7 +83,7 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
                           widget.title,
@@ -105,17 +104,23 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            _StatItem(
-                              label: "Pages",
-                              value: widget.pages.toString(),
+                            Expanded(
+                              child: _StatItem(
+                                label: "Pages",
+                                value: widget.pages.toString(),
+                              ),
                             ),
-                            _StatItem(
-                              label: "Language",
-                              value: widget.language,
+                            Expanded(
+                              child: _StatItem(
+                                label: "Language",
+                                value: widget.language,
+                              ),
                             ),
-                            _StatItem(
-                              label: "Ratings",
-                              value: widget.rating.toString(),
+                            Expanded(
+                              child: _StatItem(
+                                label: "Ratings",
+                                value: widget.rating.toString(),
+                              ),
                             ),
                           ],
                         ),
@@ -322,11 +327,18 @@ class _StatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 13)),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.grey, fontSize: 13),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
         const SizedBox(height: 6),
         Text(
           value,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );

@@ -75,15 +75,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: screenHeight * 0.03),
 
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: const [
-                            OptionLogin(
-                              text: "Google",
-                              image: "assets/google.png",
+                            Expanded(
+                              child: OptionLogin(
+                                text: "Google",
+                                image: "assets/google.png",
+                              ),
                             ),
-                            OptionLogin(
-                              text: "Apple",
-                              image: "assets/apple.png",
+                            SizedBox(width: 15),
+                            Expanded(
+                              child: OptionLogin(
+                                text: "Apple",
+                                image: "assets/apple.png",
+                              ),
                             ),
                           ],
                         ),
@@ -132,7 +136,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           alignment: Alignment.centerRight,
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, '/forgetpassword');
+                              if (emailController.text.isNotEmpty) {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/forgetpassword',
+                                  arguments: emailController.text,
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Please enter your email first"),
+                                    backgroundColor: Colors.orange,
+                                  ),
+                                );
+                              }
                             },
                             child: Text(
                               "Forgot Password?",
@@ -157,8 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     backgroundColor: Colors.green,
                                   ),
                                 );
-                                // Navigator.pushReplacementNamed(context, '/home');
-                                debugPrint("Login Successful, navigate now!");
+                                Navigator.pushReplacementNamed(context, '/mainlayout');
                               } else if (state is LoginErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -192,23 +208,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: screenHeight * 0.03),
 
                         // ✅ دلوقتي ظاهرة دايماً
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Don't have an account? "),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, "/signup");
-                              },
-                              child: const Text(
-                                "Create Account",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
+                        Center(
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Text(
+                                "Don't have an account? ",
+                                style: TextStyle(fontSize: screenWidth * 0.035),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/signup");
+                                },
+                                child: Text(
+                                  "Create Account",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenWidth * 0.035,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
 
                         SizedBox(height: screenHeight * 0.01),

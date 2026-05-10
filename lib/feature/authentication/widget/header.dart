@@ -21,11 +21,18 @@ class HeaderCustomWidget extends StatelessWidget {
           fit: BoxFit.fill,
         ),
         SizedBox(height: screenHeight * 0.02),
-        Text(text, style: StylesManager.textStyle28px),
+        Text(
+          text,
+          style: StylesManager.textStyle28px.copyWith(
+            fontSize: screenWidth * 0.07,
+          ),
+        ),
         SizedBox(height: screenHeight * 0.01),
         Text(
           "Enter your information below",
-          style: StylesManager.textStyle15px,
+          style: StylesManager.textStyle15px.copyWith(
+            fontSize: screenWidth * 0.035,
+          ),
         ),
       ],
     );

@@ -112,17 +112,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           hint: "Your Phone",
                           prefixIcon: Icons.phone_outlined,
                           controller: phoneController,
+                          keyboardType: TextInputType.phone,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your phone number';
                             }
-                            if (!RegExp(r'^\d{11}$').hasMatch(value)) {
-                              return 'Please enter a valid 11-digit phone number';
+
+                            // يقبل أرقام دولية زي:
+                            // +201234567890
+                            // +966501234567
+                            // 01234567890
+                            if (!RegExp(r'^\+?[0-9]{10,15}$').hasMatch(value)) {
+                              return 'Please enter a valid phone number';
                             }
+
                             return null;
                           },
                         ),
-
                         SizedBox(height: screenHeight * 0.0025),
 
                         // ── Password Field ──
@@ -164,8 +170,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             return null;
                           },
                         ),
-
-                        
 
                         SizedBox(height: screenHeight * 0.0025),
 
@@ -217,7 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 );
                                 Navigator.pushReplacementNamed(
                                   context,
-                                  "/login",
+                                  "/mainlayout",
                                 );
                               } else if (state is SignUpErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -252,24 +256,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         SizedBox(height: screenHeight * 0.02),
 
-                        // ── Login Link ──
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("Already have an account? "),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, "/login");
-                              },
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontWeight: FontWeight.bold,
+                        SizedBox(height: screenHeight * 0.02),
+
+                        Center(
+                          child: Wrap(
+                            alignment: WrapAlignment.center,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Text(
+                                "Already have an account? ",
+                                style: TextStyle(fontSize: screenWidth * 0.035),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/login");
+                                },
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenWidth * 0.035,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
 
                         SizedBox(height: screenHeight * 0.01),

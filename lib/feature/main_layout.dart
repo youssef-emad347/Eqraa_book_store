@@ -23,6 +23,7 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: _screens[_selectedIndex],
       bottomNavigationBar: Container(
@@ -42,8 +43,8 @@ class _MainLayoutState extends State<MainLayout> {
           backgroundColor: Colors.white,
           selectedItemColor: Constants.mainColor,
           unselectedItemColor: Colors.grey,
-          selectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-          unselectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+          selectedLabelStyle: TextStyle(fontSize: screenWidth * 0.025, fontWeight: FontWeight.w500),
+          unselectedLabelStyle: TextStyle(fontSize: screenWidth * 0.025, fontWeight: FontWeight.w500),
           items: [
             BottomNavigationBarItem(
               icon: Padding(

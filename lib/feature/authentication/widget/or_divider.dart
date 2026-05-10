@@ -9,13 +9,18 @@ class OrDivider extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(height: 1, width: screenWidth * 0.34, color: Colors.grey),
-        SizedBox(width: screenWidth * 0.02),
-        Text("Or Login With", style: StylesManager.orDividerText),
-        SizedBox(width: screenWidth * 0.02),
-        Container(height: 1, width: screenWidth * 0.34, color: Colors.grey),
+        const Expanded(child: Divider(color: Colors.grey)),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          child: Text(
+            "Or Login With",
+            style: StylesManager.orDividerText.copyWith(
+              fontSize: screenWidth * 0.035,
+            ),
+          ),
+        ),
+        const Expanded(child: Divider(color: Colors.grey)),
       ],
     );
   }

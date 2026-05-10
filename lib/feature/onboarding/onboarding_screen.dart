@@ -29,31 +29,37 @@ class OnboardingScreen extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                padding: EdgeInsets.all(20),
-                color: Colors.white,
-                width: double.infinity,
-                height: size.height * 0.35,
+                padding: EdgeInsets.all(size.width * 0.05),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      textAlign: TextAlign.center,
                       "Your personal library in your pocket",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 42,
+                        fontSize: size.width * 0.09,
                         fontWeight: FontWeight.bold,
+                        height: 1.2,
                       ),
                     ),
-                    SizedBox(height: size.height * .01),
+                    SizedBox(height: size.height * 0.02),
                     Text(
-                      textAlign: TextAlign.center,
                       "It is a long established fact that a reader will be distracted by the readable content.",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: size.width * 0.035,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey,
                       ),
                     ),
-                    SizedBox(height: size.height * 0.02),
+                    SizedBox(height: size.height * 0.03),
                     MainButton(
                       title: "Next",
                       isEnabled: true,
