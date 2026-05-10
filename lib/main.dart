@@ -1,12 +1,13 @@
 import 'package:eqraa_book_store/feature/authentication/cubit/auth_cubit.dart';
+import 'package:eqraa_book_store/feature/my_cart/cubit/cart_cubit.dart';
 import 'package:eqraa_book_store/feature/authentication/forget_password/forget_password.dart';
-
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/feature/authentication/login/login_screen.dart';
 import 'package:eqraa_book_store/feature/authentication/signup/signup_screen.dart';
 import 'package:eqraa_book_store/feature/main_layout.dart';
 import 'package:eqraa_book_store/feature/onboarding/onboarding_screen.dart';
 import 'package:eqraa_book_store/feature/splash/splash_screen.dart';
+import 'package:eqraa_book_store/feature/my_cart/my_cart_screen.dart';
 import 'package:eqraa_book_store/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,8 +25,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => CartCubit()),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           textTheme: GoogleFonts.lexendTextTheme(),
@@ -47,7 +51,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-
         debugShowCheckedModeBanner: false,
         home: const SplashScreen(),
         routes: {
@@ -57,8 +60,8 @@ class MyApp extends StatelessWidget {
           "/forgetpassword": (context) => ForgetPassword(
             email: ModalRoute.of(context)!.settings.arguments as String? ?? "",
           ),
-
           "/mainlayout": (context) => const MainLayout(),
+          "/mycart": (context) => const MyCartScreen(),
         },
       ),
     );

@@ -1,6 +1,9 @@
 import 'package:eqraa_book_store/core/constants/constants.dart';
 import 'package:eqraa_book_store/core/constants/text_style.dart';
+import 'package:eqraa_book_store/feature/my_cart/cubit/cart_cubit.dart';
+import 'package:eqraa_book_store/feature/my_cart/cubit/cart_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookDetailsScreen extends StatefulWidget {
   final String title;
@@ -57,7 +60,9 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
           ),
           IconButton(
             icon: Image.asset("assets/cartIcon.png", height: screenHeight * 0.03),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/mycart');
+            },
           ),
         ],
       ),
@@ -295,7 +300,22 @@ class _BookDetailsScreenState extends State<BookDetailsScreen> {
             SizedBox(width: screenWidth * 0.08),
             Expanded(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  CartCubit.get(context).addToCart(CartItemModel(
+                    id: DateTime.now().toString(),
+                    title: widget.title,
+                    author: widget.author,
+                    imageUrl: widget.imageUrl,
+                    price: widget.price,
+                  ));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Added to cart!"),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 1),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Constants.mainColor,
                   foregroundColor: Colors.white,

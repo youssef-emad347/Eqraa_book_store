@@ -134,17 +134,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const Spacer(),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                                width: 1.5,
+                          GestureDetector(
+                            onTap: () => Navigator.pushNamed(context, '/mycart'),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                  width: 1.5,
+                                ),
+                                borderRadius: BorderRadius.circular(100),
                               ),
-                              borderRadius: BorderRadius.circular(100),
+                              height: screenHeight * 0.06,
+                              width: screenHeight * 0.06,
+                              child: Image.asset("assets/cartIcon.png", scale: 1),
                             ),
-                            height: screenHeight * 0.06,
-                            width: screenHeight * 0.06,
-                            child: Image.asset("assets/cartIcon.png", scale: 1),
                           ),
                         ],
                       ),
@@ -160,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                    SeparateText(text: "New Arrivals"),
+                    const SeparateTextCustomWidget(text1: "New Arrivals", text2: "See All"),
                     SizedBox(height: screenHeight * 0.015),
                     SizedBox(
                       height: screenHeight * 0.15,
@@ -174,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: 5,
                       ),
                     ),
-                    SeparateText(text: "All Categories"),
+                    const SeparateTextCustomWidget(text1: "All Categories", text2: "See All"),
                     const CategoryChips(),
                     SizedBox(height: screenHeight * 0.015),
                   ],
