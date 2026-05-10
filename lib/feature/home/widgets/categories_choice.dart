@@ -1,5 +1,7 @@
 import 'package:eqraa_book_store/core/constants/constants.dart';
+import 'package:eqraa_book_store/feature/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CategoryChips extends StatefulWidget {
   const CategoryChips({super.key});
@@ -11,7 +13,13 @@ class CategoryChips extends StatefulWidget {
 class _CategoryChipsState extends State<CategoryChips> {
   int _selectedIndex = 0;
 
-  final List<String> _categories = ['Popular', 'Drama', 'Fiction', 'Arts'];
+  final List<String> _categories = [
+    'Popular',
+    'Drama',
+    'Fiction',
+    'Arts',
+    'Programming',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +40,14 @@ class _CategoryChipsState extends State<CategoryChips> {
               label: Text(_categories[index]),
               selected: isSelected,
               onSelected: (selected) {
-                setState(() {
-                  _selectedIndex = index;
-                });
+                if (selected) {
+                  setState(() {
+                    _selectedIndex = index;
+                  });
+                  context.read<HomeCubit>().getBooks(
+                    query: _categories[index].toLowerCase(),
+                  );
+                }
               },
               selectedColor: Constants.mainColor,
               backgroundColor: Colors.white,

@@ -1,15 +1,10 @@
 import 'package:eqraa_book_store/core/constants/text_style.dart';
 import 'package:flutter/material.dart';
 
-class SeparateTextCustomWidget extends StatelessWidget {
-  final String text1;
-  final String text2;
-
-  const SeparateTextCustomWidget({
-    super.key,
-    required this.text1,
-    required this.text2,
-  });
+class SeparateText extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+  const SeparateText({super.key, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -18,18 +13,11 @@ class SeparateTextCustomWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            text1,
-            style: StylesManager.textStyle24px.copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            text2,
-            style: StylesManager.textStyleBlue18px.copyWith(
-              fontSize: 16,
-            ),
+          Text(text, style: StylesManager.textStyle24px),
+          Spacer(),
+          GestureDetector(
+            onTap: onTap,
+            child: Text("See All", style: StylesManager.textStyleBlue18px),
           ),
         ],
       ),

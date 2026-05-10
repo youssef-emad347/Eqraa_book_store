@@ -83,10 +83,7 @@ class SearchScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: 20),
-                    const SeparateTextCustomWidget(
-                      text1: "Popular Books",
-                      text2: "See All",
-                    ),
+                    SeparateText(text: "Popular Books", onTap: () {}),
                   ],
                 ),
               ),
