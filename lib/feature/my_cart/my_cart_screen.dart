@@ -62,46 +62,45 @@ class MyCartScreen extends StatelessWidget {
                 else
                   SizedBox(
                     height: screenHeight * 0.2,
-                    child: const Center(
-                      child: Text("Your cart is empty"),
-                    ),
+                    child: const Center(child: Text("Your cart is empty")),
                   ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Similar Books Section directly here
-                const SeparateTextCustomWidget(
-                  text1: "Similar Books",
-                  text2: "See All",
-                ),
+                SeparateText(text: "Similar Books", onTap: () {}),
                 const SizedBox(height: 15),
                 SizedBox(
                   height: screenHeight * 0.3,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: 5,
-                    separatorBuilder: (context, index) => const SizedBox(width: 15),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 15),
                     itemBuilder: (context, index) {
                       return SizedBox(
                         width: screenWidth * 0.4,
                         child: const BookCard(
                           title: "The Morac Book 1",
                           author: "Adam Smith",
-                          imageUrl: "https://covers.openlibrary.org/b/id/14627227-L.jpg",
+                          imageUrl:
+                              "https://covers.openlibrary.org/b/id/14627227-L.jpg",
                           price: 60.00,
                         ),
                       );
                     },
                   ),
                 ),
-                
+
                 const SizedBox(height: 25),
                 const PromoCodeWidget(),
                 const SizedBox(height: 25),
                 OrderSummaryWidget(
                   itemTotal: cubit.totalAmount,
                   discount: items.isNotEmpty ? 15.00 : 0.00,
-                  grandTotal: items.isNotEmpty ? cubit.totalAmount - 15.00 : 0.00,
+                  grandTotal: items.isNotEmpty
+                      ? cubit.totalAmount - 15.00
+                      : 0.00,
                 ),
                 const SizedBox(height: 30),
                 MainButton(
